@@ -1,5 +1,5 @@
 import type { CvssMetric, CvssQualitativeMetricScore } from "./cvss";
-import { CvssV30MetricCodeMap, CvssV31MetricCodeMap } from "./cvss-base";
+import { CvssV30MetricCodeMap, CvssV31MetricCodeMap } from "./cvss-base.js";
 
 /**
  * CVSS Version
@@ -151,7 +151,14 @@ export function calculateBaseScore(metricScore: CvssQualitativeMetricScore): Cvs
   const availability = metricScore.qualitativeMetricValues.find((m) => m.metricCode === "A")?.metricScore;
 
   // 检查是否有必要的指标缺失
-  if (!attackVector || !attackComplexity || !privilegesRequired || !userInteraction || !scope || !confidentiality || !integrity || !availability) {
+  if (attackVector === undefined
+    || attackComplexity === undefined
+    || privilegesRequired === undefined
+    || userInteraction === undefined
+    || scope === undefined
+    || confidentiality === undefined
+    || integrity === undefined
+    || availability === undefined) {
     throw new Error("Missing required base metrics");
   }
   
@@ -236,8 +243,14 @@ export function calculateEnvironmentalScore(metricScore: CvssQualitativeMetricSc
   const modifiedAvailability = metricScore.qualitativeMetricValues.find((m) => m.metricCode === "MA")?.metricScore || metricScore.qualitativeMetricValues.find((m) => m.metricCode === "A")?.metricScore;
   
   // 检查是否有必要的指标缺失
-  if (!modifiedAttackVector || !modifiedAttackComplexity || !modifiedPrivilegesRequired || !modifiedUserInteraction || !modifiedScope || 
-      !modifiedConfidentiality || !modifiedIntegrity || !modifiedAvailability) {
+  if (modifiedAttackVector === undefined
+    || modifiedAttackComplexity === undefined
+    || modifiedPrivilegesRequired === undefined
+    || modifiedUserInteraction === undefined
+    || modifiedScope === undefined
+    || modifiedConfidentiality === undefined
+    || modifiedIntegrity === undefined
+    || modifiedAvailability === undefined) {
     throw new Error("Missing required environmental metrics");
   }
   
@@ -286,9 +299,9 @@ export function calculateEnvironmentalScore(metricScore: CvssQualitativeMetricSc
   }
   
   // 向上取整到一位小数
-  environmentalScore = Math.ceil(environmentalScore * 10) / 10;
+  metricScore.environmentalScore = Math.ceil(environmentalScore * 10) / 10;
   // 计算严重性等级
-  metricScore.environmentalSeverity = getSeverityRating(environmentalScore);
+  metricScore.environmentalSeverity = getSeverityRating(metricScore.environmentalScore);
   
   return metricScore;
 }
