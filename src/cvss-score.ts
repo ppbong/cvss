@@ -158,7 +158,7 @@ export function calculateBaseScore(metricScore: CvssQualitativeMetricScore): Cvs
   // 计算利用子评分
   const exploitabilityScore = 8.22 * attackVector * attackComplexity * privilegesRequired * userInteraction;
 
-  // 计算ISC
+  // 计算ISC/ISS
   const impactScoreBase = 1 - ((1 - confidentiality) * (1 - integrity) * (1 - availability));
   
   // 计算影响子评分
@@ -254,13 +254,19 @@ export function calculateEnvironmentalScore(metricScore: CvssQualitativeMetricSc
   // 计算修改后的利用子评分
   const modifiedExploitabilityScore = 8.22 * modifiedAttackVector * modifiedAttackComplexity * modifiedPrivilegesRequired * modifiedUserInteraction;
 
-  // 计算修改后的ISC
+  // 计算修改后的MISC/MISS
   const modifiedImpactScoreBase = Math.min(1 - ((1 - modifiedConfidentiality * confidentialityRequirement) * (1 - modifiedIntegrity * integrityRequirement) * (1 - modifiedAvailability * availabilityRequirement)), 0.915);
   
   // 计算修改后的影响子评分
   let modifiedImpactScore;
   if (metricScore.isModifiedScopeChanged) {
-    modifiedImpactScore = 7.52 * (modifiedImpactScoreBase - 0.029) - 3.25 * (modifiedImpactScoreBase - 0.02) ** 15;
+    if (metricScore.version === CvssVersion.V30) {
+      // v3.0
+      modifiedImpactScore = 7.52 * (modifiedImpactScoreBase - 0.029) - 3.25 * (modifiedImpactScoreBase - 0.02) ** 15;
+    } else {
+      // v3.1
+      modifiedImpactScore = 7.52 * (modifiedImpactScoreBase - 0.029) - 3.25 * (modifiedImpactScoreBase * 0.9731 - 0.02) ** 13;
+    }
   } else {
     modifiedImpactScore = 6.42 * modifiedImpactScoreBase;
   }
