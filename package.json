@@ -1,0 +1,20 @@
+{
+  "name": "cvss",
+  "version": "1.0.0",
+  "description": "Common Vulnerability Scoring System",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cvss",
+    "cvss3",
+    "cvss3.0",
+    "cvss3.1",
+    "vulnerability",
+    "scoring"
+  ],
+  "author": "ppbong",
+  "license": "MIT",
+  "type": "module"
+}
