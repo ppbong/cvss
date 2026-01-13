@@ -1,8 +1,16 @@
 {
-  "name": "cvss",
+  "name": "@ppbong/cvss",
   "version": "1.0.0",
   "description": "Common Vulnerability Scoring System",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppbong/cvss.git"
+  },
+  "author": "ppbong",
+  "license": "MIT",
+  "type": "module",
   "main": "lib/index.js",
+  "types": "lib/cvss.d.ts",
   "scripts": {
     "test": "node test/test.js",
     "build": "tsc && copyfiles -f src\\cvss.d.ts lib",
@@ -17,9 +25,10 @@
     "vulnerability",
     "scoring"
   ],
-  "author": "ppbong",
-  "license": "MIT",
-  "type": "module",
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.d.ts"
+  ],
   "devDependencies": {
     "copyfiles": "^2.4.1",
     "typescript": "^5.9.3"
