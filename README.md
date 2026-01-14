@@ -14,7 +14,7 @@ npm install @ppbong/cvss
 ## Usage Example
 
 ```javascript
-import { calculateCvssScore } from '@ppbong/index.js';
+import { calculateCvssScore } from '@ppbong/cvss';
 
 const printCvssScore = (cvssScore) => {
     console.log("CVSS Version: " + cvssScore.version);
