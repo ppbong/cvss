@@ -1,4 +1,4 @@
-import type { CvssMetric, CvssQualitativeMetricScore } from "./cvss";
+import type { CvssMetric, CvssQualitativeMetricScore } from "./cvss-base";
 /**
  * CVSS Version
  */

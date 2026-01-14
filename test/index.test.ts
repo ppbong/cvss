@@ -1,6 +1,8 @@
+import type { CvssQualitativeMetricScore } from '../lib/index';
 import { calculateCvssScore } from '../lib/index.js';
 
-const printCvssScore = (cvssScore) => {
+
+const printCvssScore = (cvssScore: CvssQualitativeMetricScore) => {
     console.log("CVSS Version: " + cvssScore.version);
     console.log("CVSS Base Score: " + cvssScore.baseScore);
     console.log("CVSS Base Severity: " + cvssScore.baseSeverity);
